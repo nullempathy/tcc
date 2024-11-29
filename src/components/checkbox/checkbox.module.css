@@ -1,0 +1,49 @@
+
+
+.body{
+    display: flex;
+    align-items: center;
+
+    gap: 1.5rem;
+}
+
+#checkbox{
+    width: 2.2rem;
+    height: 2.2rem;
+}
+
+.checkbox{
+    position: relative;
+
+    width: 2.2rem;
+    height: 2.2rem;
+}
+
+.checkbox input[type="checkbox"]{
+    display: none;
+}
+
+.newCheckBox{
+    position: absolute;
+
+    width: 2.2rem;
+    height: 2.2rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: var(--GRAY100);
+    border-radius: .5rem;
+}
+
+.newCheckBox.checked{
+    background: var(--BROWN);
+}
+
+
+.body label{
+    font-size: 1.6rem;
+    font-weight: bold;
+    font-family: "Zen Kaku Gothic Antique", sans-serif;
+}

@@ -2,9 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  font-size: 62.5%;
+
+  --BLACK: #1A1A1A;
+  --BEIJE: #E3DCCA;
+  --WHITE: #FFFFFF;
+  --BROWN: #1F1513;
+  --GRAY900: #8F8F8F;
+  --GRAY100: #dadada;
 }
 
 @media (prefers-color-scheme: dark) {

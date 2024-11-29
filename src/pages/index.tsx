@@ -1,115 +1,162 @@
+import { useState } from "react";
+import { useRouter } from "next/router";
+import { CheckBox } from "@/components/checkbox/CheckBox";
+import { Section } from "@/components/section/Section";
+import { LanguageConstants } from "@/storage/languages";
+import { GenresConstants } from "@/storage/genres";
+import styles from "../styles/index.module.css";
 import Image from "next/image";
-import localFont from "next/font/local";
-
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
+import Logo from "../img/logo.png";
+import Name from "../img/name.png";
+import Background from "../img/background.png";
 
 export default function Home() {
-  return (
-    <div
-      className={`${geistSans.variable} ${geistMono.variable} grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]`}
-    >
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/pages/index.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const router = useRouter();
+  const [languages] = useState(LanguageConstants);
+  const [genres] = useState(GenresConstants);
+  
+  const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
+  const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
+  const [showGenres, setShowGenres] = useState(false);
+  const [showLanguage, setShowLanguage] = useState(true);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  function handleLanguageChange(id: string, isChecked: boolean) {
+    setSelectedLanguages((prev) => {
+      if (isChecked) {
+        return [...prev, id];
+      } else {
+        return prev.filter((item) => item !== id);
+      }
+    });
+  }
+
+  function handleGenreChange(id: string, isChecked: boolean) {
+    setSelectedGenres((prev) => {
+      if (isChecked) {
+        return [...prev, id];
+      } else {
+        return prev.filter((item) => item !== id);
+      }
+    });
+  }
+
+  function renderLanguage() {
+    return languages.map((language) => (
+      <CheckBox
+        key={language.id}
+        id={String(language.id)}
+        value={language.name}
+        storage="languages"
+        checked={selectedLanguages.includes(String(language.id))} 
+        onChange={handleLanguageChange}
+      />
+    ));
+  }
+
+  function renderGenres() {
+    return genres.map((genre) => (
+      <CheckBox
+        key={genre.id}
+        id={String(genre.id)}
+        value={genre.name}
+        storage="genres"
+        checked={selectedGenres.includes(String(genre.id))}
+        onChange={handleGenreChange}
+      />
+    ));
+  }
+
+  async function searchApi() {
+    try {
+      const body = {
+        genres: selectedGenres,
+        languages: selectedLanguages,
+      };
+  
+      const response = await fetch('/api/searchGames', {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      });
+
+      console.log(await response.json())
+      
+      router.push('/result')
+
+    } catch (e) {
+      console.error("Erro na requisição:", e);
+    }
+  }
+  
+  return (
+    <div className={styles.background}>
+      <Image src={Background} alt="" id={styles.background} />
+      <div className={styles.body}>
+        <div className={styles.logo}>
+          <div className={styles.wrapper}>
+            <Image id={styles.logo} src={Logo} alt="Logo" />
+            <div className={styles.slogan}>
+              <Image id={styles.slogan} src={Name} alt="Logo escrito Confia Primo" />
+              <p>Encontramos o jogo que busca!</p>
+            </div>
+          </div>
+          <div className={styles.slide}>
+            <header className={styles.header}>
+              <h6>Busque fácil e rápido</h6>
+              <p>As melhores indicações de primo para primo</p>
+            </header>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+        <div className={styles.form}>
+          <div className={styles.header}>
+            <span>EAE PRIMO</span>
+            <h6>Filtre os jogos indicados</h6>
+          </div>
+          <form>
+            {showLanguage && <Section>{renderLanguage()}</Section>}
+            {showGenres && <Section>{renderGenres()}</Section>}
+
+            {showLanguage && (
+              <button 
+                className={styles.button}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setShowLanguage(false);
+                  setShowGenres(true);
+                }}
+              >
+                Próximo
+              </button>
+            )}
+
+            {showGenres && (
+              <button 
+                className={styles.button}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setShowGenres(false);
+                  setShowLanguage(true);
+                }}
+              >
+                Anterior
+              </button>
+            )}
+
+            <button 
+              className={styles.button} 
+              onClick={(e) => {
+                e.preventDefault();
+                searchApi();
+              }}
+            >
+              Pesquisar
+            </button>
+          </form>
+        </div>
+      </div>
     </div>
   );
 }
