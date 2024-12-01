@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useRouter } from "next/router";
 import { CheckBox } from "@/components/checkbox/CheckBox";
 import { Section } from "@/components/section/Section";
 import { LanguageConstants } from "@/storage/languages";
@@ -10,6 +9,8 @@ import Logo from "../img/logo.png";
 import Name from "../img/name.png";
 import Background from "../img/background.png";
 
+import { useRouter } from "next/router";
+
 export default function Home() {
   const router = useRouter();
   const [languages] = useState(LanguageConstants);
@@ -19,6 +20,7 @@ export default function Home() {
   const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
   const [showGenres, setShowGenres] = useState(false);
   const [showLanguage, setShowLanguage] = useState(true);
+  
 
   function handleLanguageChange(id: string, isChecked: boolean) {
     setSelectedLanguages((prev) => {
@@ -73,18 +75,20 @@ export default function Home() {
         languages: selectedLanguages,
       };
   
-      const response = await fetch('/api/searchGames', {
+      const response = await fetch("/api/searchGames", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(body),
       });
-
-      console.log(await response.json())
-      
-      router.push('/result')
-
+  
+      const data = await response.json();
+  
+      router.push({
+        pathname: "/result",
+        query: { data: JSON.stringify(data) },
+      });
     } catch (e) {
       console.error("Erro na requisição:", e);
     }

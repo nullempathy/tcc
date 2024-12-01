@@ -5,8 +5,24 @@ import Background from "../img/background.png"
 import styles from "../styles/result.module.css"
 
 import { OptionsGame } from "@/components/optionsGames/optionsGame"
+import { useRouter } from "next/router"
+import { useEffect, useState } from "react"
 
 export default function Result() {
+
+    const router = useRouter();
+    const [data, setData] = useState([]);
+  
+    useEffect(() => {
+      if (router.query.data) {
+        try {
+          const parsedData = JSON.parse(router.query.data as string);
+          setData(parsedData);
+        } catch (error) {
+          console.error("Erro ao fazer o parse dos dados:", error);
+        }
+      }
+    }, [router.query.data]);
 
     return(
         <div className={styles.background}>
