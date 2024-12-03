@@ -11,7 +11,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       try {
         const response = await axiosInstance.post('https://api.igdb.com/v4/games', query);
         res.status(200).json(response.data);
-      } catch (error) {
+      } catch {
         res.status(500).json({ error: "Erro ao buscar jogos" });
       }
     } else {
