@@ -1,13 +1,13 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { axiosInstance } from "@/utils/axiosConfig";
+import { getAxiosInstance } from "@/utils/axiosConfig";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-
     if (req.method === "POST") {
       const { genres, languages }= req.body;
 
       const query = verifyArrays(genres, languages);
-  
+      const axiosInstance = await getAxiosInstance();
+
       try {
         const response = await axiosInstance.post('https://api.igdb.com/v4/games', query);
         res.status(200).json(response.data);
