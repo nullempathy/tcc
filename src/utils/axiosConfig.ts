@@ -32,7 +32,7 @@ async function getAccessToken() {
     tokenType = response.data.token_type;
     console.log("Novo token obtido:", accessToken);
   } catch (error) {
-    console.error("Error fetching access token:", error.response.data);
+    console.error("Error fetching access token:", error);
     throw error;
   }
 }
