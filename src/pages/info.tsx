@@ -1,104 +1,114 @@
-import Image from "next/image"
-import Logo from "../img/logo.png"
-
-import styles from "../styles/info.module.css"
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { LanguageConstants } from "../storage/languages";
+import Image from "next/image";
+import Logo from "../img/logo.png";
+import styles from "../styles/info.module.css";
+import { useRouter } from "next/router";
 
 interface Cover {
-    image_id?: string 
-};
+  image_id?: string;
+}
+
+interface Language {
+  id: number;
+  language: number;
+}
 
 interface Game {
-    id: number;
-    name: string;
-    cover?: Cover;  
-    summary?: string
-};
+  id: number;
+  name: string;
+  cover?: Cover;
+  summary?: string;
+  language_supports?: Language[];
+}
 
-export default function Info(){
+export default function Info() {
+  const router = useRouter();
+  const [data, setData] = useState<Game>();
 
-    const router = useRouter();
-    const [data, setData] = useState<Game>();
+  const getLanguageName = (languageId: number) => {
+    const language = LanguageConstants.find((lang) => lang.id === languageId);
+    return language ? language.name : `Idioma ID: ${languageId}`;
+  };
 
-    useEffect(() => {
-    
-        try {
-            const game: Game = {
-                id: Number(router.query.id),
-                name: router.query.name as string,
-                cover: router.query.image ? { image_id: router.query.image as string } : undefined,
-                summary: router.query.summary as string | undefined,
-            };
-            setData(game);
-        } catch (error) {
-            console.error("Erro ao fazer o parse dos dados:", error);
-        }
+  useEffect(() => {
+    console.log("Dados recebidos no router.query:", router.query);
 
-        console.log(data)
+    try {
+      const savedGame = localStorage.getItem("selectedGame");
+      if (savedGame) {
+        const game: Game = JSON.parse(savedGame);
+        setData(game);
+        console.log("Objeto game carregado do localStorage:", game);
+      } else {
+        console.error("Nenhum dado encontrado no localStorage");
+      }
+    } catch (error) {
+      console.error("Erro ao carregar os dados do jogo:", error);
+    }
+  }, []);
 
-    }, [])
+  const uniqueLanguages = data?.language_supports
+    ? Array.from(
+        new Set(data.language_supports.map((item) => item.language))
+      ).map((languageId) => {
+        return { language: languageId };
+      })
+    : [];
 
-    return(
-        <div className={styles.body}>
+  return (
+    <div className={styles.body}>
+      <div className={styles.info}>
+        {data?.cover?.image_id ? (
+          <Image
+            src={`https://images.igdb.com/igdb/image/upload/t_cover_big/${data.cover.image_id}.jpg`}
+            width={1920}
+            height={500}
+            alt={data.name || "Imagem do Jogo"}
+            className={styles.image}
+            priority
+          />
+        ) : (
+          <Image src={Logo} alt="Logo do nosso" className={styles.image} />
+        )}
 
-            <div className={styles.info}>
-                    {data?.cover?.image_id ? (
-                        <Image
-                            src={`https://images.igdb.com/igdb/image/upload/t_cover_big/${data.cover.image_id}.jpg`}
-                            width={1920}
-                            height={500}
-                            alt={data.name || "Imagem do Jogo"}
-                            className={styles.image}
-                            priority
-                        />
-                        ) : (
-                        <Image
-                            src={Logo}
-                            alt="Logo do nosso"
-                            className={styles.image}
-                        />
-                    )}
+        <p className={styles.launch}>
+          Data de Lançamento <span>05/12/2019</span>
+        </p>
 
-                
-                <p className={styles.launch}>Data de Lançamento <span>05/12/2019</span></p>
+        <h6 className={styles.title}>{data?.name}</h6>
+      </div>
 
-                <h6 className={styles.title}>{data?.name}</h6>
-
-
+      <main className={styles.main}>
+        {uniqueLanguages?.length > 0 && (
+          <div className={styles.languageWrapper}>
+            <div className={styles.language}>
+              <p>Idiomas:</p>
+              <hr />
             </div>
-                
-            <main className={styles.main}>
-                <div className={styles.languageWrapper}>
-                    <div className={styles.language}>
-                        <p>Idiomas: </p>
-                        <hr />
-                    </div>
-                    <div className={styles.language}>
-                        <p>Português (Brasil) </p>
-                        <hr />
-                    </div>
-                    <div className={styles.language}>
-                        <p>Inglês</p>
-                        <hr />
-                    </div>
-                    <div className={styles.language}>
-                        <p>Francês</p>
-                        <hr />
-                    </div>
+
+            {uniqueLanguages?.map((language) => {
+              const languageName = getLanguageName(language.language);
+              return (
+                <div key={language.language} className={styles.language}>
+                  <p>{languageName}</p>
+                  <hr />
                 </div>
-                
-                {data?.summary && (
-                    <div className={styles.synopsis}>
-                        <h6>Sinopse</h6>
-                        <hr />
-                    
-                        <div>
-                            <p>{data?.summary}</p>
-                        </div>
-                    </div>
-                )}
-            </main>
-        </div>
-    )
-}   0
+              );
+            })}
+          </div>
+        )}
+
+        {data?.summary && (
+          <div className={styles.synopsis}>
+            <h6>Sinopse</h6>
+            <hr />
+            <div>
+              <p>{data?.summary}</p>
+            </div>
+          </div>
+        )}
+      </main>
+    </div>
+  );
+}

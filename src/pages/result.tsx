@@ -1,20 +1,26 @@
 import Image from "next/image";
 import Logo from "../img/logo.png";
-import Background from "../img/background.png"; // Imagem de fundo
+import Background from "../img/background.png";
 import styles from "../styles/result.module.css";
 import { OptionsGame } from "@/components/optionsGames/optionsGame";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 type Cover = {
-  image_id?: string;  
+  image_id?: string;
+};
+
+type Language = {
+  id: number;
+  language: number;
 };
 
 type Game = {
   id: number;
   name: string;
-  cover?: Cover;  
-  summary?: string
+  cover?: Cover;
+  summary?: string;
+  languages_supports?: Language[];
 };
 
 export default function Result() {
@@ -25,18 +31,22 @@ export default function Result() {
 
   useEffect(() => {
     if (router.query.data) {
-        try {
-          const parsedData: Game[] = JSON.parse(router.query.data as string);
-          setData(parsedData);
-        } catch (error) {
-          console.error("Erro ao fazer o parse dos dados:", error);
-        }
+      try {
+        const parsedData: Game[] = JSON.parse(router.query.data as string);
+        setData(parsedData);
+      } catch (error) {
+        console.error("Erro ao fazer o parse dos dados:", error);
+      }
     } else {
       setData(
         Array.from({ length: 120 }, (_, i) => ({
           id: i + 1,
           name: `Jogo ${i + 1}`,
-          cover: { image_id: "co1rs4" }, 
+          cover: { image_id: "co1rs4" },
+          languages_supports: [
+            { id: 1, language: 1 },
+            { id: 2, language: 2 },
+          ],
         }))
       );
     }
@@ -56,17 +66,26 @@ export default function Result() {
   };
 
   const buildImageUrl = (imageId: string | undefined) => {
-    if (!imageId) return "";  
+    if (!imageId) return "";
     return `https://images.igdb.com/igdb/image/upload/t_cover_big/${imageId}.jpg`;
+  };
+
+  const handleClick = (game: Game) => {
+    console.log("Dados enviados para /info:", game);
+
+    localStorage.setItem("selectedGame", JSON.stringify(game));
+    router.push({
+      pathname: "/info",
+    });
   };
 
   return (
     <div className={styles.background}>
       <div className={styles.backgroundImageWrapper}>
         <Image
-          src={Background}  
+          src={Background}
           alt="Imagem de fundo"
-          layout="fill"      
+          layout="fill"
           objectFit="cover"
         />
       </div>
@@ -91,20 +110,8 @@ export default function Result() {
               <OptionsGame
                 key={game.id}
                 name={game.name}
-                image={buildImageUrl(game.cover?.image_id)} 
-                onClick={() =>
-                  router.push({
-                    pathname: "/info",
-                    query: {
-                        id: game.id,
-                        name: game.name,
-                        image: game.cover?.image_id,
-                        summary: game.summary,
-                      
-                    },
-                  })
-                }
-                
+                image={buildImageUrl(game.cover?.image_id)}
+                onClick={() => handleClick(game)}
               />
             ))}
           </div>
