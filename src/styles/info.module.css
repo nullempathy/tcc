@@ -1,0 +1,139 @@
+@import url('https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@400;700&display=swap');
+
+.body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: black;
+    background-image: url('../img/backgranito.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    overflow-x: hidden; 
+
+    font-family: "Abhaya Libre", serif;
+    font-weight: bold;
+}
+
+.info{
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center; 
+
+    margin: 10rem auto;
+}
+
+
+.image{
+    width: 40rem;
+    height: 50rem;
+
+    object-fit: contain;
+
+    border-radius: 2rem;
+}
+
+.logo{
+    width: 15rem;
+
+    margin-bottom: 1rem;
+}
+
+.main{
+    display: flex;
+    flex-direction: column;
+    gap: 6.5rem;
+
+    padding: 0 25rem;
+}
+
+.title{
+    color: var(--WHITE);
+
+    font-size: 3rem;
+    font-family: "Abhaya Libre", serif;
+    font-weight: 700;
+}
+
+.launch{
+    font-size: 2.4rem;
+    font-family: "Abhaya Libre", serif;
+    font-weight: normal;
+
+    color: var(--WHITE);
+    opacity: 90%;
+}
+
+.languageWrapper{
+    width: 40rem;
+    height: fit-content;
+
+    background: var(--BEIJE);
+
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+    padding: 3rem 0 1.5rem;
+    border-radius: 2rem;
+}
+
+
+.language{
+    display: flex;
+    flex-direction: column;
+
+    gap: 1.5rem;
+}
+
+.language p{
+    color: var(--BLACK);
+
+    font-size: 2.6rem;
+    font-family: "Abhaya Libre", serif;
+
+    margin-left: 1.5rem;
+}
+
+.language hr{
+    border-color: var(--BLACK);
+}
+
+.language:last-child hr {
+    display: none;
+}
+
+
+.synopsis{
+    padding: 5rem 0rem 5rem;
+
+    margin-bottom: 10rem;
+
+    background: var(--BEIJE);
+
+    border-radius: 2rem;
+}
+
+.synopsis h6{
+    font-size: 2.6rem;
+    
+    color: var(--BLACK);
+    
+    margin-left: 5rem;
+    margin-bottom: 3.5rem;
+}
+
+.synopsis hr{
+    border-color: var(--BLACK);
+}
+
+.synopsis div{
+    padding: 5rem 10rem 0rem;
+
+    color: var(--BLACK);
+
+    font-size: 1.8rem;
+}

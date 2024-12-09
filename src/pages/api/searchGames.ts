@@ -22,13 +22,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 function verifyArrays(genres: string[], languages: string[]){
 
   if (genres.length > 0 && languages.length > 0) {
-    return `fields name, cover.image_id; where language_supports.language = (${languages.join(', ')}) & genres = (${genres.join(', ')}); limit: 120;`;
+    return `fields name, cover.image_id, language_supports.language, summary; where language_supports.language = (${languages.join(', ')}) & genres = (${genres.join(', ')}); limit: 120;`;
   } else if (genres.length === 0 && languages.length > 0) {
-    return `fields name, cover.image_id; where language_supports.language = (${languages.join(', ')}); limit: 120;`;
+    return `fields name, cover.image_id, language_supports.language, summary; where language_supports.language = (${languages.join(', ')}); limit: 120;`;
   } else if (genres.length > 0 && languages.length === 0) {
-    return `fields name, cover.image_id; where genres = (${genres.join(', ')}); limit: 120;`;
+    return `fields name, cover.image_id, language_supports.language, summary; where genres = (${genres.join(', ')}); limit: 120;`;
   } else {
-    return `fields name, cover.image_id; limit: 120;`;
+    return `fields name, cover.image_id, language_supports.language, summary; limit: 120;`;
   }
   
 }

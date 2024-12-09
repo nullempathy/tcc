@@ -14,6 +14,7 @@ type Game = {
   id: number;
   name: string;
   cover?: Cover;  
+  summary?: string
 };
 
 export default function Result() {
@@ -24,14 +25,13 @@ export default function Result() {
 
   useEffect(() => {
     if (router.query.data) {
-      try {
-        const parsedData: Game[] = JSON.parse(router.query.data as string);
-        setData(parsedData);
-      } catch (error) {
-        console.error("Erro ao fazer o parse dos dados:", error);
-      }
+        try {
+          const parsedData: Game[] = JSON.parse(router.query.data as string);
+          setData(parsedData);
+        } catch (error) {
+          console.error("Erro ao fazer o parse dos dados:", error);
+        }
     } else {
-      // Dados falsos para testar
       setData(
         Array.from({ length: 120 }, (_, i) => ({
           id: i + 1,
@@ -71,7 +71,6 @@ export default function Result() {
         />
       </div>
 
-      {/* Corpo do conteúdo */}
       <div className={styles.body}>
         <div className={styles.wrapper}>
           <div className={styles.logo}>
@@ -93,13 +92,25 @@ export default function Result() {
                 key={game.id}
                 name={game.name}
                 image={buildImageUrl(game.cover?.image_id)} 
+                onClick={() =>
+                  router.push({
+                    pathname: "/info",
+                    query: {
+                        id: game.id,
+                        name: game.name,
+                        image: game.cover?.image_id,
+                        summary: game.summary,
+                      
+                    },
+                  })
+                }
+                
               />
             ))}
           </div>
         </div>
       </div>
 
-      {/* Paginação */}
       <div className={styles.pagination}>
         <button
           className={styles.paginationButton}
