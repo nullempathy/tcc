@@ -5,6 +5,7 @@ import styles from "../styles/result.module.css";
 import { OptionsGame } from "@/components/optionsGames/optionsGame";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import Head from "next/head";
 
 type Cover = {
   image_id?: string;
@@ -80,6 +81,10 @@ export default function Result() {
   };
 
   return (
+    <>
+    <Head>
+      <title>Confia Primo | Resultado</title>
+    </Head>
     <div className={styles.background}>
       <div className={styles.backgroundImageWrapper}>
         <Image
@@ -138,5 +143,6 @@ export default function Result() {
         </button>
       </div>
     </div>
+    </>
   );
 }

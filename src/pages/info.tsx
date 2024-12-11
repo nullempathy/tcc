@@ -4,6 +4,7 @@ import Image from "next/image";
 import Logo from "../img/logo.png";
 import styles from "../styles/info.module.css";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 interface Cover {
   image_id?: string;
@@ -57,6 +58,11 @@ export default function Info() {
     : [];
 
   return (
+    <>
+     <Head>
+        <title>Confia Primo | {data?.name}</title>
+    </Head>
+
     <div className={styles.body}>
       <div className={styles.info}>
         {data?.cover?.image_id ? (
@@ -71,10 +77,6 @@ export default function Info() {
         ) : (
           <Image src={Logo} alt="Logo do nosso" className={styles.image} />
         )}
-
-        <p className={styles.launch}>
-          Data de Lançamento <span>05/12/2019</span>
-        </p>
 
         <h6 className={styles.title}>{data?.name}</h6>
       </div>
@@ -110,5 +112,6 @@ export default function Info() {
         )}
       </main>
     </div>
+    </>
   );
 }

@@ -10,6 +10,7 @@ import Name from "../img/name.png";
 import Background from "../img/background.png";
 
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 export default function Home() {
   const router = useRouter();
@@ -95,6 +96,10 @@ export default function Home() {
   }
   
   return (
+    <>
+     <Head>
+        <title>Conifa primo</title>
+    </Head>
     <div className={styles.background}>
       <Image src={Background} alt="" id={styles.background} />
       <div className={styles.body}>
@@ -162,5 +167,6 @@ export default function Home() {
         </div>
       </div>
     </div>
+    </>
   );
 }
