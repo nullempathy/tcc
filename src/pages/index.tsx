@@ -98,7 +98,7 @@ export default function Home() {
   return (
     <>
      <Head>
-        <title>Conifa primo</title>
+        <title>Confia primo</title>
     </Head>
     <div className={styles.background}>
       <Image src={Background} alt="" id={styles.background} />
