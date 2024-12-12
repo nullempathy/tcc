@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import styles from "./checkbox.module.css";
 import Image from "next/image";
 import verifyWhite from "../../img/verifyWhite.svg";
-import verifyBrown from "../../img/verifyBrown.svg";
 
 interface ICheckBox {
   value: string;
@@ -16,7 +15,7 @@ export function CheckBox(props: ICheckBox) {
   const [isChecked, setIsChecked] = useState(props.checked);
 
   useEffect(() => {
-    setIsChecked(props.checked);  // Atualiza o estado local quando o estado externo mudar
+    setIsChecked(props.checked);
   }, [props.checked]);
 
   function handleChecked(e: React.ChangeEvent<HTMLInputElement>) {
@@ -35,10 +34,10 @@ export function CheckBox(props: ICheckBox) {
           checked={isChecked} 
         />
         <label htmlFor={props.id} className={`${styles.newCheckBox} ${isChecked ? styles.checked : ''}`}>
-          {isChecked ? <Image src={verifyWhite} alt=""/> : <Image src={verifyBrown} alt=""/>}
+          {isChecked ? <Image src={verifyWhite} alt=""/> : null}
         </label>
       </div>
-      <label htmlFor={props.id}>{props.value}</label>
+      <label htmlFor={props.id} translate="no">{props.value}</label>
     </div>
   );
 }

@@ -108,21 +108,21 @@ export default function Home() {
             <Image id={styles.logo} src={Logo} alt="Logo" />
             <div className={styles.slogan}>
               <Image id={styles.slogan} src={Name} alt="Logo escrito Confia Primo" />
-              <p>Encontramos o jogo que busca!</p>
+              <p translate="no">Encontramos o jogo que busca!</p>
             </div>
           </div>
           <div className={styles.slide}>
             <header className={styles.header}>
-              <h6>Busque fácil e rápido</h6>
-              <p>As melhores indicações de primo para primo</p>
+              <h6 translate="no">Busque fácil e rápido</h6>
+              <p translate="no">As melhores indicações de primo para primo</p>
             </header>
           </div>
         </div>
 
         <div className={styles.form}>
           <div className={styles.header}>
-            <span>EAE PRIMO</span>
-            <h6>Filtre os jogos indicados</h6>
+            <span translate="no">EAE PRIMO</span>
+            <h6 translate="no">Filtre os jogos indicados</h6>
           </div>
           <form>
             {showLanguage && <Section>{renderLanguage()}</Section>}

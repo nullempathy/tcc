@@ -82,67 +82,72 @@ export default function Result() {
 
   return (
     <>
-    <Head>
-      <title>Confia Primo | Resultado</title>
-    </Head>
-    <div className={styles.background}>
-      <div className={styles.backgroundImageWrapper}>
-        <Image
-          src={Background}
-          alt="Imagem de fundo"
-          layout="fill"
-          objectFit="cover"
-        />
-      </div>
+      <Head>
+        <title>Confia Primo | Resultado</title>
+      </Head>
+      <div className={styles.background}>
+        {/* Botão de voltar */}
+        <button className={styles.backButton} onClick={() => router.back()}>
+          ←
+        </button>
 
-      <div className={styles.body}>
-        <div className={styles.wrapper}>
-          <div className={styles.logo}>
-            <Image
-              className={styles.logoImage}
-              src={Logo}
-              alt="Logo do nosso site"
-            />
-            <div style={{ width: "19rem" }}>
-              <p className={styles.info}>
-                Clique em cima do banner para saber mais informações
-              </p>
+        <div className={styles.backgroundImageWrapper}>
+          <Image
+            src={Background}
+            alt="Imagem de fundo"
+            layout="fill"
+            objectFit="cover"
+          />
+        </div>
+
+        <div className={styles.body}>
+          <div className={styles.wrapper}>
+            <div className={styles.logo}>
+              <Image
+                className={styles.logoImage}
+                src={Logo}
+                alt="Logo do nosso site"
+              />
+              <div style={{ width: "19rem" }}>
+                <p className={styles.info}>
+                  Clique em cima do banner para saber mais informações
+                </p>
+              </div>
+            </div>
+
+            <div className={styles.games}>
+              {currentItems.map((game) => (
+                <OptionsGame
+                  key={game.id}
+                  name={game.name}
+                  image={buildImageUrl(game.cover?.image_id)}
+                  onClick={() => handleClick(game)}
+                />
+              ))}
             </div>
           </div>
+        </div>
 
-          <div className={styles.games}>
-            {currentItems.map((game) => (
-              <OptionsGame
-                key={game.id}
-                name={game.name}
-                image={buildImageUrl(game.cover?.image_id)}
-                onClick={() => handleClick(game)}
-              />
-            ))}
-          </div>
+        <div className={styles.pagination}>
+          <button
+            className={styles.paginationButton}
+            onClick={handlePrevious}
+            disabled={currentPage === 1}
+          >
+            Anterior
+          </button>
+          <span className={styles.paginationInfo}>
+            Página {currentPage} de {totalPages}
+          </span>
+          <button
+            className={styles.paginationButton}
+            onClick={handleNext}
+            disabled={currentPage === totalPages}
+          >
+            Próximo
+          </button>
         </div>
       </div>
-
-      <div className={styles.pagination}>
-        <button
-          className={styles.paginationButton}
-          onClick={handlePrevious}
-          disabled={currentPage === 1}
-        >
-          Anterior
-        </button>
-        <span className={styles.paginationInfo}>
-          Página {currentPage} de {totalPages}
-        </span>
-        <button
-          className={styles.paginationButton}
-          onClick={handleNext}
-          disabled={currentPage === totalPages}
-        >
-          Próximo
-        </button>
-      </div>
-    </div>
     </>
   );
 }

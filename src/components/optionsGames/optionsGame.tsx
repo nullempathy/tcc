@@ -42,7 +42,7 @@ export function OptionsGame({ image, name, onClick }: Props) {
         {renderImage()}
       </div>
       <div className={styles.name}>
-        <p>{name}</p>
+        <p translate="no">{name}</p>
       </div>
     </button>
   );
