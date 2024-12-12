@@ -110,8 +110,7 @@ export default function Info() {
             <div className={styles.synopsis}>
               <h6>Sinopse</h6>
               <hr />
-              {/* Div para tradução da sinopse */}
-              <div id="google_translate_element">
+              <div>
                 <p>{data?.summary}</p>
               </div>
             </div>
