@@ -59,59 +59,64 @@ export default function Info() {
 
   return (
     <>
-     <Head>
+      <Head>
         <title>Confia Primo | {data?.name}</title>
-    </Head>
+      </Head>
 
-    <div className={styles.body}>
-      <div className={styles.info}>
-        {data?.cover?.image_id ? (
-          <Image
-            src={`https://images.igdb.com/igdb/image/upload/t_cover_big/${data.cover.image_id}.jpg`}
-            width={1920}
-            height={500}
-            alt={data.name || "Imagem do Jogo"}
-            className={styles.image}
-            priority
-          />
-        ) : (
-          <Image src={Logo} alt="Logo do nosso" className={styles.image} />
-        )}
+      <div className={styles.body}>
+        {/* Botão de voltar */}
+        <button className={styles.backButton} onClick={() => router.back()}>
+          ←
+        </button>
 
-        <h6 className={styles.title}>{data?.name}</h6>
-      </div>
+        <div className={styles.info}>
+          {data?.cover?.image_id ? (
+            <Image
+              src={`https://images.igdb.com/igdb/image/upload/t_cover_big/${data.cover.image_id}.jpg`}
+              width={1920}
+              height={500}
+              alt={data.name || "Imagem do Jogo"}
+              className={styles.image}
+              priority
+            />
+          ) : (
+            <Image src={Logo} alt="Logo do nosso" className={styles.image} />
+          )}
 
-      <main className={styles.main}>
-        {uniqueLanguages?.length > 0 && (
-          <div className={styles.languageWrapper}>
-            <div className={styles.language}>
-              <p>Idiomas:</p>
+          <h6 className={styles.title} translate="no">{data?.name}</h6>
+        </div>
+
+        <main className={styles.main}>
+          {uniqueLanguages?.length > 0 && (
+            <div className={styles.languageWrapper}>
+              <div className={styles.language}>
+                <p>Idiomas:</p>
+                <hr />
+              </div>
+
+              {uniqueLanguages?.map((language) => {
+                const languageName = getLanguageName(language.language);
+                return (
+                  <div key={language.language} className={styles.language}>
+                    <p>{languageName}</p>
+                    <hr />
+                  </div>
+                );
+              })}
+            </div>
+          )}
+
+          {data?.summary && (
+            <div className={styles.synopsis}>
+              <h6>Sinopse</h6>
               <hr />
+              <div>
+                <p>{data?.summary}</p>
+              </div>
             </div>
-
-            {uniqueLanguages?.map((language) => {
-              const languageName = getLanguageName(language.language);
-              return (
-                <div key={language.language} className={styles.language}>
-                  <p>{languageName}</p>
-                  <hr />
-                </div>
-              );
-            })}
-          </div>
-        )}
-
-        {data?.summary && (
-          <div className={styles.synopsis}>
-            <h6>Sinopse</h6>
-            <hr />
-            <div>
-              <p>{data?.summary}</p>
-            </div>
-          </div>
-        )}
-      </main>
-    </div>
+          )}
+        </main>
+      </div>
     </>
   );
 }

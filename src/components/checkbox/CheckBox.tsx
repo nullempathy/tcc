@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import styles from "./checkbox.module.css";
 import Image from "next/image";
 import verifyWhite from "../../img/verifyWhite.svg";
-import verifyBrown from "../../img/verifyBrown.svg";
 
 interface ICheckBox {
   value: string;
@@ -38,7 +37,7 @@ export function CheckBox(props: ICheckBox) {
           {isChecked ? <Image src={verifyWhite} alt=""/> : null}
         </label>
       </div>
-      <label htmlFor={props.id}>{props.value}</label>
+      <label htmlFor={props.id} translate="no">{props.value}</label>
     </div>
   );
 }

@@ -130,3 +130,22 @@
 
     font-size: 1.8rem;
 }
+
+.backButton {
+    position: absolute;
+    top: 1rem;
+    left: 5rem; /* Margem de 5rem */
+    background-color: transparent;
+    color: var(--WHITE);
+    border: none;
+    font-size: 3.5rem; /* Seta maior */
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 3;
+    transition: color 0.3s;
+  }
+  
+  .backButton:hover {
+    color: var(--BEIJE); /* Cor muda ao passar o mouse */
+  }
+  

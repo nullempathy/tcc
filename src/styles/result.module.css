@@ -3,7 +3,7 @@
 .background {
   position: relative;
   width: 100%;
-  height: 100vh; 
+  height: 100vh;
 }
 
 .backgroundImageWrapper {
@@ -18,7 +18,7 @@
 .body {
   position: absolute;
   width: 100%;
-  height: 100vh; 
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -66,7 +66,7 @@
   display: flex;
   align-items: center;
   gap: 1rem;
-  z-index: 2; 
+  z-index: 2;
 }
 
 .paginationButton {
@@ -90,3 +90,22 @@
   color: var(--WHITE);
   font-family: "Abhaya Libre", serif;
 }
+
+.backButton {
+  position: absolute;
+  top: 1rem;
+  left: 5rem; /* Aumentado para 5rem */
+  background-color: transparent;
+  color: var(--WHITE);
+  border: none;
+  font-size: 3.5rem; /* Aumentado para deixar a seta mais grossa */
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 3;
+  transition: color 0.3s;
+}
+
+.backButton:hover {
+  color: var(--BEIJE);
+}
+
