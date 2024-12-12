@@ -82,8 +82,16 @@ export default function Info() {
           ) : (
             <Image src={Logo} alt="Logo do nosso" className={styles.image} />
           )}
-
+          
           <h6 className={styles.title} translate="no">{data?.name}</h6>
+          <p className={styles.fornecedor}>Fornecedores:</p>
+          <div className={styles.linksWrapper}>
+            <a href="https://store.steampowered.com/" target="_blank" rel="noopener noreferrer" className={styles.link}>Steam</a>
+            <a href="https://www.ea.com/pt-br/games" target="_blank" rel="noopener noreferrer" className={styles.link}>EA</a>
+            <a href="https://www.gog.com/en/games/new" target="_blank" rel="noopener noreferrer" className={styles.link}>GOG</a>
+            <a href="https://store.epicgames.com/pt-BR/" target="_blank" rel="noopener noreferrer" className={styles.link}>Epic Games</a>
+          </div>
+
         </div>
 
         <main className={styles.main}>

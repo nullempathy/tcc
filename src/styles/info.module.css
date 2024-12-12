@@ -148,4 +148,28 @@
   .backButton:hover {
     color: var(--BEIJE); /* Cor muda ao passar o mouse */
   }
+
+
+  .linksWrapper {
+    display: flex;
+    gap: 1.5rem;
+  }
+  
+  .link {
+    color: var(--WHITE);
+    font-size: 2.4rem;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  
+  .link:hover {
+    color: var(--BEIJE);
+  }
+  
+  .fornecedor {
+    margin-top: 3rem;
+    color: var(--WHITE);
+    font-size: 3rem;
+    text-decoration: none;
+  }
   
