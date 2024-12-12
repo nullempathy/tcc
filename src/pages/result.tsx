@@ -86,8 +86,8 @@ export default function Result() {
         <title>Confia Primo | Resultado</title>
       </Head>
       <div className={styles.background}>
-        {/* Botão de Voltar */}
-        <button className={styles.backButton} onClick={() => router.push("/")}>
+        {/* Botão de voltar */}
+        <button className={styles.backButton} onClick={() => router.back()}>
           ←
         </button>
 
